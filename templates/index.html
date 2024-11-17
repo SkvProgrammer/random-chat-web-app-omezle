@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omegle Chat</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        #chat {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-bottom: 15px;
+        }
+        #message {
+            width: calc(100% - 100px);
+        }
+        .btn {
+            width: 100%;
+        }
+        .chat-input-group {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h3 class="text-center">Welcome to Omegle Chat</h3>
+        <div id="chat" class="mb-3"></div>
+        <div class="chat-input-group mb-3">
+            <input id="message" class="form-control" placeholder="Type a message...">
+            <button id="send" class="btn btn-primary">Send</button>
+        </div>
+        <button id="find" class="btn btn-success mb-2">Find Partner</button>
+        <p class="text-center text-muted">Chat anonymously with a random stranger!</p>
+    </div>
+
+    <!-- Bootstrap JS and Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+
+        const chat = document.getElementById('chat');
+        const message = document.getElementById('message');
+        const send = document.getElementById('send');
+        const find = document.getElementById('find');
+
+        // WebSocket: Handle connect
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        // WebSocket: Waiting for partner
+        socket.on('waiting_for_partner', () => {
+            chat.innerHTML += '<p class="text-muted">Waiting for a new partner...</p>';
+        });
+
+        // WebSocket: Partner found
+        socket.on('partner_found', () => {
+            chat.innerHTML += '<p class="text-success">New partner found! Start chatting.</p>';
+        });
+
+        // WebSocket: Partner disconnected
+        socket.on('partner_disconnected', () => {
+            chat.innerHTML += '<p class="text-danger">Your partner disconnected. Searching for a new partner...</p>';
+        });
+
+        // WebSocket: Receive message
+        socket.on('receive_message', (data) => {
+            chat.innerHTML += `<p class="text-primary"><strong>Partner:</strong> ${data}</p>`;
+        });
+
+        // WebSocket: Rate limit exceeded
+        socket.on('rate_limit_exceeded', (data) => {
+            chat.innerHTML += `<p class="text-warning">${data.message}</p>`;
+        });
+
+        // Button: Send message
+        send.addEventListener('click', () => {
+            const msg = message.value.trim();
+            if (msg) {
+                socket.emit('send_message', msg);
+                chat.innerHTML += `<p class="text-secondary"><strong>You:</strong> ${msg}</p>`;
+                message.value = '';
+            }
+        });
+
+        // Button: Find partner
+        find.addEventListener('click', () => {
+            socket.emit('find_partner');
+        });
+    </script>
+</body>
+</html>
