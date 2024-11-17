@@ -1,17 +1,8 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
-
-# Initialize Flask-Limiter
-limiter = Limiter(
-    get_remote_address,
-    app=app,
-    default_limits=["200 per day", "50 per hour"]
-)
 
 # Initialize Flask-SocketIO
 socketio = SocketIO(app)
@@ -21,7 +12,6 @@ users = {}  # Mapping: {socket_id: partner_socket_id or None}
 last_partners = {}  # Mapping: {socket_id: previous_partner_socket_id}
 
 @app.route('/')
-@limiter.limit("10 per minute")  # Rate limit for accessing the homepage
 def home():
     return render_template('index.html')
 
@@ -58,7 +48,6 @@ def find_new_partner(sid):
     emit('waiting_for_partner', room=sid)
 
 @socketio.on('find_partner')
-@limiter.limit("5 per minute")  # Limit requests to find a partner
 def find_partner():
     # Disconnect the current partner first
     current_partner = users.get(request.sid)
@@ -73,20 +62,14 @@ def find_partner():
     find_new_partner(request.sid)
 
 @socketio.on('send_message')
-@limiter.limit("20 per minute")  # Limit the rate of sending messages
 def send_message(data):
     partner = users.get(request.sid)
     if partner:
         emit('receive_message', data, room=partner)
 
-@app.errorhandler(429)
-def ratelimit_error(e):
-    return {"error": "Rate limit exceeded. Please slow down."}, 429
-
 @socketio.on_error_default
 def handle_error(e):
-    if isinstance(e, limiter.RateLimitExceeded):
-        emit('rate_limit_exceeded', {'message': 'You are sending messages too quickly. Please slow down.'})
+    print(f"An error occurred: {e}")
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
