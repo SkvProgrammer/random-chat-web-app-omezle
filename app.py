@@ -1,15 +1,14 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
-
-
-
+import os
+import socket
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
-from flask_cors import CORS
+app.config['SECRET_KEY'] = os.urandom(24)
+app.config['PREFERRED_URL_SCHEME'] = 'https'
 
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": ["https://yourdomain.com", "https://sub.yourdomain.com"]}})
 
 # Initialize Flask-SocketIO
 socketio = SocketIO(app)
@@ -79,4 +78,9 @@ def handle_error(e):
     print(f"An error occurred: {e}")
 
 if __name__ == '__main__':
-    socketio.run(app)
+    # Bind to any available port
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(('', 0))  # Let the OS assign an available port
+        port = s.getsockname()[1]  # Retrieve the assigned port
+    print(f"Running on port {port}")
+    socketio.run(app, host='0.0.0.0', port=port)
