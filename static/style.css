@@ -3,6 +3,8 @@ html, body {
     margin: 0; /* Remove default margin */
     display: flex;
     flex-direction: column;
+    font-family: 'Lucida Console', 'Courier New', monospace!important;
+
 }
 
 /* Ensure the main content expands to fill the available space */
@@ -16,12 +18,29 @@ html, body {
     }
     .chat-container {
         max-width: 600px;
+        width:80%;
         margin: 50px auto;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, #FF5F6D, #FFC371); /* Tropical Sunrise */
+        border-radius: 50px;
+        color:white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Initial shadow */
         padding: 20px;
+        animation: shadow-pulse 2s ease-in-out infinite; /* Animation */
     }
+    
+    /* Keyframes for box-shadow animation */
+    @keyframes shadow-pulse {
+        0% {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        50% {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Larger shadow */
+        }
+        100% {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    }
+    
     #chat {
         height: 300px;
         overflow-y: auto;
@@ -43,9 +62,44 @@ html, body {
     }
    
     footer {
-background-color: #212529;
-color: #ffffff;
-}
+        background: linear-gradient(45deg, #FF6347, #FFD700, #20B2AA); /* Gradient background */
+        padding: 40px 20px;
+        color: white;
+        text-align: center;
+        font-family: 'Lucida Console', 'Courier New', monospace;
+        box-shadow: 25px -2px 25px rgba(0, 0, 0, 0.1);
+        border-radius: 50px 50px 0 0;
+    }
+    
+    footer p {
+        margin: 10px 0;
+    }
+    
+    footer a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+    
+    footer a:hover {
+        color: #FFD700; /* Golden color on hover */
+    }
+    
+    footer .social-icons {
+        margin-top: 20px;
+    }
+    
+    footer .social-icons a {
+        margin: 0 15px;
+        font-size: 25px;
+        color: white;
+        transition: color 0.3s ease;
+    }
+    
+    footer .social-icons a:hover {
+        color: #FFD700; /* Change to golden on hover */
+    }    
 footer a {
 color: #ffc107;
 text-decoration: none;
@@ -54,10 +108,136 @@ footer a:hover {
 text-decoration: underline;
 }
 header {
-background: linear-gradient(90deg, #007bff, #6610f2); /* Blue to Purple */
+    border-bottom-left-radius:40px!important;
+    border-bottom-right-radius:40px!important;;
 
+    background: linear-gradient(45deg, #FF6347, #FFD700, #00BFFF, #20B2AA); /* Warm to Cool Gradient */
+    background-size: 400% 400%;
+    animation: gradient-animation-header 10s ease infinite;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Larger shadow */
 }
+
+h1 {
+    font-family: 'Lucida Console', 'Courier New', monospace;
+    font-size: 3rem;
+    margin: 0;
+}
+
+/* Keyframes for header animation */
+@keyframes gradient-animation-header {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 
 #message{
 box-shadow:none!important;
+}
+@keyframes move-left-right {
+    0% {
+        transform: translateX(0);
+        text-transform:none; /* Start at the original position */
+    }
+    50% {
+        transform: translateX(200px);
+        text-transform:uppercase; /* Move to the right */
+    }
+    100% {
+        transform: translateX(400px); 
+        text-transform:capitalize;/* Return to the original position */
+    }
+}
+
+/* Apply the animation to the title */
+#animate-title {
+    display: inline-block;
+    animation: move-left-right 5s infinite ease-in-out; /* Animation duration: 5s */
+}
+
+
+/* lets animate the boring elements to look a bit funky*/
+
+
+
+
+
+
+/*background animation part*/
+
+/* body {
+    background: linear-gradient(45deg, #FF7F50, #FF1493, #8A2BE2);
+    background-size: 400% 400%;
+    animation: gradient-animation 10s ease infinite;
+    height: 100vh;
+    margin: 0;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/*background animation part*/
+
+
+.smiley {
+    position: absolute;
+    font-size: 30px;
+    animation: fall 5s infinite linear;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100px);
+    }
+    100% {
+        transform: translateY(100vh); /* Falls to the bottom */
+    }
+}
+
+/* Randomize the position and animation duration of each smiley */
+.smiley:nth-child(1) {
+    left: 10%;
+    animation-duration: 6s;
+}
+
+.smiley:nth-child(2) {
+    left: 30%;
+    animation-duration: 7s;
+    animation-delay: -2s;
+}
+
+.smiley:nth-child(3) {
+    left: 50%;
+    animation-duration: 5s;
+    animation-delay: -1s;
+}
+
+.smiley:nth-child(4) {
+    left: 70%;
+    animation-duration: 8s;
+    animation-delay: -3s;
+}
+
+.smiley:nth-child(5) {
+    left: 90%;
+    animation-duration: 9s;
+    animation-delay: -4s;
 }
