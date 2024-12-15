@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omegle Chat</title>
+    <title>Omezle - Random video and text chatting application without login</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+            html, body {
+        height: 100%; /* Full height for the viewport */
+        margin: 0; /* Remove default margin */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Ensure the main content expands to fill the available space */
+   .chat-container {
+        flex: 1; 
+    }
+
         body {
             background-color: #f8f9fa;
             font-family: Arial, sans-serif;
@@ -38,11 +50,42 @@
             display: flex;
             gap: 10px;
         }
+       
+        footer {
+    background-color: #212529;
+    color: #ffffff;
+}
+footer a {
+    color: #ffc107;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+header {
+    background: linear-gradient(90deg, #007bff, #6610f2); /* Blue to Purple */
+ 
+}
+
+#message{
+    box-shadow:none!important;
+}
+
     </style>
 </head>
 <body>
+    <header>
+        <nav class="navbar navbar-expand-lg text-primary text-center">
+            <div class="container text-center">
+                <a class="navbar-brand" href="#" style="color:white!important;"><h1 style=" font-family: 'Lucida Console', 'Courier New', monospace;">Omezle</h1></a>
+               
+            </div>
+        </nav>
+    </header>
+    
+
     <div class="chat-container">
-        <h3 class="text-center">Welcome to Omegle Chat</h3>
+        <h3 class="text-center">Welcome to Omezle Chat</h3>
         <div id="chat" class="mb-3"></div>
         <div class="chat-input-group mb-3">
             <input id="message" class="form-control" placeholder="Type a message...">
@@ -52,11 +95,25 @@
         <p class="text-center text-muted">Chat anonymously with a random stranger!</p>
     </div>
 
+    <footer class="text-center py-3">
+        <p class="mb-1">
+            &copy; <span id="currentYear"></span> Omezle Chat. All rights reserved.
+        </p>
+        <p class="mb-0">
+            Made with <span style="color: red;">❤️</span> in India.
+        </p>
+    </footer>
+    
+    
+    
     <!-- Bootstrap JS and Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Socket.IO -->
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script>
+        // Set the current year in the footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
         const socket = io();
 
         const chat = document.getElementById('chat');
