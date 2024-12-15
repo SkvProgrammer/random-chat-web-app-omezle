@@ -7,7 +7,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PREFERRED_URL_SCHEME'] = 'https'
 
-#CORS(app, resources={r"/*": {"origins": ["https://yourdomain.com", "https://sub.yourdomain.com"]}})
 
 # Initialize Flask-SocketIO
 socketio = SocketIO(app)
