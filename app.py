@@ -76,4 +76,4 @@ def handle_error(e):
     print(f"An error occurred: {e}")
 
 if __name__ == '__main__':
-    socketio.run(app,debug=True)
+    socketio.run(app)
