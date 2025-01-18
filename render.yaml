@@ -2,7 +2,6 @@ services:
   - type: web
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn --worker-class eventlet -w 1 app:app
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.9.0
+    startCommand: gunicorn --worker-class eventlet app:app
+
+    
