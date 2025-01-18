@@ -11,7 +11,7 @@ app.config['PREFERRED_URL_SCHEME'] = 'https'
 # Initialize Flask-SocketIO
 socketio = SocketIO(app, 
                    cors_allowed_origins="*",
-                   async_mode='gevent',
+                   async_mode='eventlet',
                    transport=['websocket', 'polling'])
 # Store connected users
 users = {}  # Mapping: {socket_id: partner_socket_id or None}
@@ -78,4 +78,4 @@ def handle_error(e):
     print(f"An error occurred: {e}")
 
 if __name__ == '__main__':
-    socketio.run(app,debug=True)
+    socketio.run(app)
