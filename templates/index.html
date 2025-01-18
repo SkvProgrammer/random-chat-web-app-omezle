@@ -80,13 +80,8 @@
         // Set the current year in the footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-        const socket = io({
-    transports: ['websocket'],
-    upgrade: false,
-    reconnection: true,
-    reconnectionAttempts: 5,
-    reconnectionDelay: 1000
-});
+        const socket = io();
+
         const chat = document.getElementById('chat');
         const message = document.getElementById('message');
         const send = document.getElementById('send');
