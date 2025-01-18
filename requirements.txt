@@ -2,6 +2,7 @@ Flask==2.0.1
 Flask-SocketIO==5.1.1
 python-socketio==5.4.0
 python-engineio==4.2.1
-gevent==21.12.0
-gevent-websocket==0.10.1
 gunicorn==20.1.0
+# Replace gevent with these
+simple-websocket==0.10.1
+websocket-client==1.6.1
