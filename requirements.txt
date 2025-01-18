@@ -6,3 +6,4 @@ gunicorn==20.1.0
 # Replace gevent with these
 simple-websocket==0.10.1
 websocket-client==1.6.1
+werkzeug==2.0.3
