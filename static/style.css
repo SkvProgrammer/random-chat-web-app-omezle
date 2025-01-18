@@ -4,7 +4,7 @@ html, body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background: linear-gradient(120deg, #f1f5f9, #e0f7fa);
     color: #37474f; /* Neutral dark gray for text */
 }
@@ -127,7 +127,8 @@ footer {
     color: white;
     text-align: center;
     padding: 24px;
-    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+
     border-top-left-radius: 24px;
     border-top-right-radius: 24px;
     box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.1);
